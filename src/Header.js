@@ -11,10 +11,7 @@ function Header() {
   return (
     <div className="header">
       <Link to="/">
-        <img
-          className="header__logo"
-          src="http://pngimg.com/uploads/amazon/amazon_PNG11.png"
-        />
+        <img className="header__logo" src="http://pngimg.com/uploads/amazon/amazon_PNG11.png" />
       </Link>
 
       <div className="header__search">
@@ -22,10 +19,12 @@ function Header() {
         <SearchIcon className="header__searchIcon" />
       </div>
       <div className="header__nav">
-        <div className="header__option">
-          <span className="header__optionLineOne">Hello, Guest</span>
-          <span className="header__optionLineTwo">Sign In</span>
-        </div>
+        <Link to="/login">
+          <div className="header__option">
+            <span className="header__optionLineOne">Hello, Guest</span>
+            <span className="header__optionLineTwo">Sign In</span>
+          </div>
+        </Link>
         <div className="header__option">
           <span className="header__optionLineOne">Returns</span>
           <span className="header__optionLineTwo">& Orders</span>
@@ -39,9 +38,7 @@ function Header() {
       <Link to="/checkout">
         <div className="header__optionCart">
           <ShoppingCartIcon />
-          <span className="header__optionLineTwo header__cartCount">
-            {cart?.length}
-          </span>
+          <span className="header__optionLineTwo header__cartCount">{cart?.length}</span>
         </div>
       </Link>
     </div>
