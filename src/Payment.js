@@ -7,6 +7,8 @@ import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js'
 import CurrencyFormat from 'react-currency-format'
 import { sumBy } from 'lodash'
 import axios from './axios'
+import Orders from './Orders'
+import { db } from './firebase'
 
 function Payment() {
   const [{ cart, user }, dispatch] = useStateValue()
@@ -38,6 +40,7 @@ function Payment() {
   }, [cart])
 
   console.log('THE SECRET IS >>> ', clientSecret)
+  console.log('USER >>', user)
 
   const handleSubmit = async (event) => {
     event.preventDefault()
@@ -51,6 +54,12 @@ function Payment() {
       })
       .then(({ paymentIntent }) => {
         // paymentIntent == payment confirmation
+
+        db.collection('users').doc(user?.uid).collection('orders').doc(paymentIntent.id).set({
+          cart: cart,
+          amount: paymentIntent.amount,
+          created: paymentIntent.created,
+        })
 
         setSucceeded(true)
         setError(null)
