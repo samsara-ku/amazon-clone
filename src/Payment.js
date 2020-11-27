@@ -6,7 +6,7 @@ import { Link, useHistory } from 'react-router-dom'
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js'
 import CurrencyFormat from 'react-currency-format'
 import { sumBy } from 'lodash'
-import axios from 'axios'
+import axios from './axios'
 
 function Payment() {
   const [{ cart, user }, dispatch] = useStateValue()
@@ -37,6 +37,8 @@ function Payment() {
     getClientSecret()
   }, [cart])
 
+  console.log('THE SECRET IS >>> ', clientSecret)
+
   const handleSubmit = async (event) => {
     event.preventDefault()
     setProcessing(true)
@@ -53,6 +55,10 @@ function Payment() {
         setSucceeded(true)
         setError(null)
         setProcessing(false)
+
+        dispatch({
+          type: 'EMPTY_CART',
+        })
 
         history.replace('/orders')
       })
